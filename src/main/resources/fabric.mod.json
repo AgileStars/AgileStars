@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "agilestars",
+	"version": "${version}",
+	"name": "AgileStars",
+	"description": "AgileStars - a Fabric mod for Minecraft 1.21.1.",
+	"authors": [
+		"AgileStars"
+	],
+	"contact": {},
+	"license": "All-Rights-Reserved",
+	"icon": "assets/agilestars/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.agilestars.AgileStars"
+		],
+		"client": [
+			"com.agilestars.client.AgileStarsClient"
+		]
+	},
+	"mixins": [
+		"agilestars.mixins.json",
+		{
+			"config": "agilestars.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

@@ -1,0 +1,54 @@
+# gradle
+
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
+*.launch
+.settings/
+.bin/
+.classpath
+.project
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.vscode/
+
+# macos
+
+*.DS_Store
+
+# fabric / loom
+
+run/
+remappedSrc/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+
+# --- machine-local tooling (not part of the mod) ---
+# portable Git installed for this machine
+tools/
+# Gradle home kept inside the workspace so caches stay sandbox-writable
+.gradle-home/
+# scratch space (template downloads, diagnostics)
+.tmp/
+# DSH session config (skills pack)
+.dsh/
+# SSH keys for pushing
+.ssh/
+# reference copy of the upstream template (kept on disk only)
+_fabric_template.zip
