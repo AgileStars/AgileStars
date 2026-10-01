@@ -68,13 +68,15 @@ public class CustomCreeperModel extends CreeperModel<Creeper> {
 						.addBox(-3.5F, -4.0F, -1.5F, 7.0F, 10.0F, 3.0F, deformation),
 				PartPose.offset(0.0F, 6.0F, 0.0F));
 
-		// legs: the project uses 4 wide x 6 tall x 4 deep
+		// legs: the project uses 4 wide x 6 tall x 4 deep. They are tucked in
+		// slightly (z +-3.5 instead of +-4) so the gap between the front and
+		// back pairs reads clearly.
 		CubeListBuilder leg = CubeListBuilder.create().texOffs(0, 16)
 				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, deformation);
-		part.addOrReplaceChild("right_hind_leg", leg, PartPose.offset(-2.0F, 18.0F, 4.0F));
-		part.addOrReplaceChild("left_hind_leg", leg, PartPose.offset(2.0F, 18.0F, 4.0F));
-		part.addOrReplaceChild("right_front_leg", leg, PartPose.offset(-2.0F, 18.0F, -4.0F));
-		part.addOrReplaceChild("left_front_leg", leg, PartPose.offset(2.0F, 18.0F, -4.0F));
+		part.addOrReplaceChild("right_hind_leg", leg, PartPose.offset(-2.0F, 18.0F, 3.5F));
+		part.addOrReplaceChild("left_hind_leg", leg, PartPose.offset(2.0F, 18.0F, 3.5F));
+		part.addOrReplaceChild("right_front_leg", leg, PartPose.offset(-2.0F, 18.0F, -3.5F));
+		part.addOrReplaceChild("left_front_leg", leg, PartPose.offset(2.0F, 18.0F, -3.5F));
 
 		return LayerDefinition.create(mesh, TEXTURE_WIDTH, TEXTURE_HEIGHT);
 	}
