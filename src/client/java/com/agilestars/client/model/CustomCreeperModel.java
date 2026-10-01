@@ -53,9 +53,13 @@ public class CustomCreeperModel extends CreeperModel<Creeper> {
 		PartDefinition part = mesh.getRoot();
 
 		// head: 8 wide x 8 tall x 8 deep, front face at (8,8)-(16,16)
+		// The project also has a sprout plane on top of the head (a separate
+		// cube in the .bbmodel, 8 wide x 6 tall standing upright); its art is
+		// parked at (5,5)-(13,11) so the unwrap below reads it as the north face.
 		part.addOrReplaceChild("head",
 				CubeListBuilder.create().texOffs(0, 0)
-						.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation),
+						.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation)
+						.addBox(-4.0F, -3.0F, -0.5F, 8.0F, 6.0F, 1.0F, deformation),
 				PartPose.offset(0.0F, 6.0F, 0.0F));
 
 		// torso: the project uses 7 wide x 10 tall x 3 deep
