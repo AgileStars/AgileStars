@@ -151,15 +151,20 @@ public final class DragonHeadModel {
 		pose.popPose();
 	}
 
+	/**
+	 * 1.21.1 VertexConsumer method names, verified against the official
+	 * mappings: addVertex / setColor / setUv / setOverlay / setUv2 / setNormal.
+	 * (The older vertex()/color()/uv() names do not exist here.)
+	 */
 	private static void vertex(VertexConsumer buffer, org.joml.Matrix4f m,
 			float x, float y, float z, float u, float v,
 			float nx, float ny, float nz, int light, int overlay) {
-		buffer.vertex(m, x, y, z)
-				.color(255, 255, 255, 255)
-				.uv(u / 1024.0F, v / 1024.0F)
-				.overlayCoords(overlay)
-				.uv2(light)
-				.normal(nx, ny, nz);
+		buffer.addVertex(m, x, y, z)
+				.setColor(255, 255, 255, 255)
+				.setUv(u / 1024.0F, v / 1024.0F)
+				.setOverlay(overlay)
+				.setUv2(light & 0xFFFF, (light >> 16) & 0xFFFF)
+				.setNormal(nx, ny, nz);
 	}
 
 	public static RenderType renderType() {
