@@ -24,7 +24,9 @@ public abstract class CreeperRendererMixin {
 	private void agilestars$useCustomModel(EntityRendererProvider.Context context, CallbackInfo ci) {
 		CustomCreeperModel model = new CustomCreeperModel(
 				context.getModelSet().bakeLayer(ModelLayers.CREEPER));
-		((LivingEntityRendererInvoker<Creeper, CustomCreeperModel>) this).agilestars$setModel(model);
+		// deliberate raw cast: the accessor takes EntityModel<?>, the invoker
+		// accepts the erased EntityModel, so no runtime generic check happens
+		((LivingEntityRendererAccessor) this).agilestars$setModel((CustomCreeperModel) model);
 	}
 
 	/**
