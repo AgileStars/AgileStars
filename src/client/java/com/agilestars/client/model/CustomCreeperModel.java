@@ -52,13 +52,21 @@ public class CustomCreeperModel extends CreeperModel<Creeper> {
 		MeshDefinition mesh = new MeshDefinition();
 		PartDefinition part = mesh.getRoot();
 
-		// head: 8 wide x 8 tall x 8 deep, front face at (8,8)-(16,16)
-		// The project also has a sprout plane on top of the head (a separate
-		// cube in the .bbmodel, 8 wide x 6 tall standing upright); its art is
-		// parked at (5,5)-(13,11) so the unwrap below reads it as the north face.
+		// head: 8 wide x 8 tall x 8 deep. The exported project data
+		// (creepa.geo.json) says the head is texOffs(0,0), which on this
+		// 64x32 texture puts the FRONT face at (8,8)-(16,16) - the texture
+		// carries the face there.
 		part.addOrReplaceChild("head",
 				CubeListBuilder.create().texOffs(0, 0)
-						.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation)
+						.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation),
+				PartPose.offset(0.0F, 6.0F, 0.0F));
+
+		// sprout: a separate 8x6x0 plane in the project, standing upright on
+		// top of the head. Zero depth is not renderable, so it gets 1 pixel.
+		// texOffs(32,16) makes its front face read (33,17)-(41,23), where the
+		// sprout artwork sits.
+		part.addOrReplaceChild("sprout",
+				CubeListBuilder.create().texOffs(32, 16)
 						.addBox(-4.0F, -3.0F, -0.5F, 8.0F, 6.0F, 1.0F, deformation),
 				PartPose.offset(0.0F, 6.0F, 0.0F));
 
