@@ -12,7 +12,11 @@ Minecraft **1.21.1** Fabric 模组，基于官方模板
 | Fabric API | 0.116.17+1.21.1 |
 | Fabric Loom | 1.18-SNAPSHOT（`net.fabricmc.fabric-loom-remap`） |
 | Gradle | 9.7.1（wrapper 自带，无需本机安装） |
-| JDK | 21 |
+| JDK（跑 Gradle） | **25** |
+| JDK（编译目标） | 21（`build.gradle` 里 `options.release = 21`） |
+
+> ⚠️ Fabric Loom 1.18 要求用 **Java 25** 启动 Gradle，用 Java 21 会在配置阶段直接报
+> `requires at least a runtime version 25`。模组本身仍编译为 Java 21（Minecraft 1.21.1 的要求），两者不冲突。
 
 版本号都能在 <https://fabricmc.net/develop/> 查到，改了以后同步更新 `gradle.properties`。
 
