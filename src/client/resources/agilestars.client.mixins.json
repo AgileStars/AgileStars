@@ -3,7 +3,9 @@
 	"package": "com.agilestars.client.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"AgileStarsClientMixin"
+		"AgileStarsClientMixin",
+		"LivingEntityRendererInvoker",
+		"CreeperRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
