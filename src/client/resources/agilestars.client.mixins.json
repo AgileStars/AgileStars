@@ -5,7 +5,8 @@
 	"client": [
 		"AgileStarsClientMixin",
 		"LivingEntityRendererAccessor",
-		"CreeperRendererMixin"
+		"CreeperRendererMixin",
+		"EnderDragonRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
