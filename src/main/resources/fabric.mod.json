@@ -16,7 +16,8 @@
 			"com.agilestars.AgileStars"
 		],
 		"client": [
-			"com.agilestars.client.AgileStarsClient"
+			"com.agilestars.client.AgileStarsClient",
+			"com.agilestars.client.DragonPreview"
 		]
 	},
 	"mixins": [

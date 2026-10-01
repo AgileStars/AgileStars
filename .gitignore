@@ -55,3 +55,10 @@ _fabric_template.zip
 
 # Blockbench source models (kept on disk, not shipped)
 assets/source-models/*.bbmodel
+
+# generated intermediates (the sources stay on disk)
+assets/source-models/dragon_anim_extract.json
+assets/source-models/dragon_bone_map.json
+
+# one-off analysis scripts used while reverse-engineering the models
+_*.py
