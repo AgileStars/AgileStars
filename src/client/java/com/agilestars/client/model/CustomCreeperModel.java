@@ -17,11 +17,18 @@ import net.minecraft.world.entity.monster.Creeper;
 /**
  * Creeper model rebuilt from the user's Blockbench project (creepa.bbmodel).
  *
- * Geometry and UVs use the standard creeper layout (64x32 texture) so the
- * artwork from the Blockbench project maps onto it correctly; the animation is
- * the vanilla one so the creeper still walks, turns its head and puffs up.
+ * The project's texture is 40x32 and lays the head out at 2 pixels per unit
+ * (the 8x8x8 head occupies u 16..32 for the face plus u 32..40 for the ears,
+ * v 0..21), which is why the vanilla 64x32 UV layout stretched the face.
+ * UVs below are expressed in that 40x32 layout.
+ *
+ * The vanilla animation is kept, so the creeper still walks and turns its head.
  */
 public class CustomCreeperModel extends CreeperModel<Creeper> {
+
+	/** The project's texture is 40x32, not the vanilla 64x32. */
+	public static final int TEXTURE_WIDTH = 40;
+	public static final int TEXTURE_HEIGHT = 32;
 
 	private final ModelPart root;
 	private final ModelPart head;
@@ -42,26 +49,51 @@ public class CustomCreeperModel extends CreeperModel<Creeper> {
 		this.leftFrontLeg = root.getChild("left_front_leg");
 	}
 
+	private static CubeListBuilder legCubes(CubeDeformation deformation) {
+		return CubeListBuilder.create().texOffs(0, 0)
+				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, deformation)
+				.uv(0, 0, 8, 8)      // up
+				.uv(8, 0, 16, 8)     // down
+				.uv(0, 8, 8, 20)     // east
+				.uv(8, 8, 16, 20)    // west
+				.uv(16, 8, 24, 20)   // north
+				.uv(24, 8, 32, 20);  // south
+	}
+
 	public static LayerDefinition createBodyLayer(CubeDeformation deformation) {
 		MeshDefinition mesh = new MeshDefinition();
 		PartDefinition part = mesh.getRoot();
 
+		// head: 8x8x8 drawn at 2 px per unit; its front face holds the artwork
 		part.addOrReplaceChild("head",
-				CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation),
+				CubeListBuilder.create().texOffs(0, 0)
+						.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, deformation)
+						.uv(0, 0, 16, 16)     // up
+						.uv(16, 0, 32, 16)    // down
+						.uv(32, 0, 40, 16)    // east (ears)
+						.uv(32, 16, 40, 32)   // west
+						.uv(16, 16, 32, 32)   // north (the face)
+						.uv(0, 16, 16, 32),   // south
 				PartPose.offset(0.0F, 6.0F, 0.0F));
 
+		// body: the project uses 7 wide x 10 tall x 3 deep
 		part.addOrReplaceChild("body",
-				CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, deformation),
+				CubeListBuilder.create().texOffs(0, 0)
+						.addBox(-3.5F, -5.0F, -1.5F, 7.0F, 10.0F, 3.0F, deformation)
+						.uv(0, 0, 7, 3)      // up
+						.uv(7, 0, 14, 3)     // down
+						.uv(14, 0, 17, 10)   // east
+						.uv(17, 0, 20, 10)   // west
+						.uv(20, 0, 27, 10)   // north
+						.uv(27, 0, 34, 10),  // south
 				PartPose.offset(0.0F, 6.0F, 0.0F));
 
-		CubeListBuilder leg = CubeListBuilder.create().texOffs(0, 16)
-				.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 6.0F, 4.0F, deformation);
-		part.addOrReplaceChild("right_hind_leg", leg, PartPose.offset(-2.0F, 18.0F, 4.0F));
-		part.addOrReplaceChild("left_hind_leg", leg, PartPose.offset(2.0F, 18.0F, 4.0F));
-		part.addOrReplaceChild("right_front_leg", leg, PartPose.offset(-2.0F, 18.0F, -4.0F));
-		part.addOrReplaceChild("left_front_leg", leg, PartPose.offset(2.0F, 18.0F, -4.0F));
+		part.addOrReplaceChild("right_hind_leg", legCubes(deformation), PartPose.offset(-2.0F, 18.0F, 4.0F));
+		part.addOrReplaceChild("left_hind_leg", legCubes(deformation), PartPose.offset(2.0F, 18.0F, 4.0F));
+		part.addOrReplaceChild("right_front_leg", legCubes(deformation), PartPose.offset(-2.0F, 18.0F, -4.0F));
+		part.addOrReplaceChild("left_front_leg", legCubes(deformation), PartPose.offset(2.0F, 18.0F, -4.0F));
 
-		return LayerDefinition.create(mesh, 64, 32);
+		return LayerDefinition.create(mesh, TEXTURE_WIDTH, TEXTURE_HEIGHT);
 	}
 
 	public static ResourceLocation getTextureLocation() {
